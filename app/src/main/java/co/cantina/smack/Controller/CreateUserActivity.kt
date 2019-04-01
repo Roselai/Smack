@@ -1,10 +1,11 @@
-package co.cantina.smack
+package co.cantina.smack.Controller
 
-import android.content.res.Resources
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import co.cantina.smack.R
+import co.cantina.smack.Services.AuthService
 import kotlinx.android.synthetic.main.activity_create_user.*
 import kotlin.random.Random
 
@@ -52,6 +53,8 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserClicked(view: View){
+        AuthService.registerUser(this, "shukti@test.com", password = "123456") {complete ->
 
+        }
     }
 }
