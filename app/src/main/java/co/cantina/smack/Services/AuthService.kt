@@ -12,6 +12,10 @@ import org.json.JSONObject
 
 object AuthService {
 
+    var isLoggedIn = false
+    var userEmail = ""
+    var authToken = ""
+
     fun registerUser(context: Context, email: String, password: String, complete: (Boolean) -> Unit) {
 
         val jsonBody = JSONObject()
@@ -49,13 +53,16 @@ object AuthService {
 
         val loginRequest = object : JsonObjectRequest(Method.POST, URL_LOGIN, null, Response.Listener {response ->
 
-            println(response)
-
-
+            userEmail = response.getString("email")
+            authToken = response.getString("token")
+            isLoggedIn = true
+            complete(true)
 
         }, Response.ErrorListener {error ->
+
             Log.d("ERROR", "could not register user: $error")
             complete(false)
+            
         }) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
