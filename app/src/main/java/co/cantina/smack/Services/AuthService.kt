@@ -8,6 +8,7 @@ import com.android.volley.Response
 import com.android.volley.toolbox.JsonObjectRequest
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import org.json.JSONException
 import org.json.JSONObject
 
 object AuthService {
@@ -53,16 +54,21 @@ object AuthService {
 
         val loginRequest = object : JsonObjectRequest(Method.POST, URL_LOGIN, null, Response.Listener {response ->
 
-            userEmail = response.getString("email")
-            authToken = response.getString("token")
-            isLoggedIn = true
-            complete(true)
+            try {
+                userEmail = response.getString("user")
+                authToken = response.getString("token")
+                isLoggedIn = true
+                complete(true)
+            }catch(e: JSONException) {
+                Log.d("JSON", "EXC:" + e.localizedMessage)
+                complete(false)
+            }
 
         }, Response.ErrorListener {error ->
 
             Log.d("ERROR", "could not register user: $error")
             complete(false)
-            
+
         }) {
             override fun getBodyContentType(): String {
                 return "application/json; charset=utf-8"
