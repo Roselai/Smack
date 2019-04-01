@@ -7,4 +7,4 @@ object UserDataService {
     var email = ""
     var name = ""
 
-} 
+}
