@@ -60,27 +60,33 @@ class CreateUserActivity : AppCompatActivity() {
         val email = createEmailText.text.toString()
         val password = createPasswordText.text.toString()
 
+        if (userName.isNotEmpty() && email.isNotEmpty() && password.isNotEmpty()){
 
-        AuthService.registerUser(this, email, password) {registerSuccess ->
-            if (registerSuccess) {
-                AuthService.loginUser(this, email, password){loginSuccess ->
-                    if (loginSuccess) {
-                        AuthService.createUser(this, userName, email, userAvatar, avatarColor ){createUserSuccess ->
-                            if (createUserSuccess){
-                                enableSpinner(false)
-                                finish()
-                            } else {
-                                errorToast()
+            AuthService.registerUser(this, email, password) {registerSuccess ->
+                if (registerSuccess) {
+                    AuthService.loginUser(this, email, password){loginSuccess ->
+                        if (loginSuccess) {
+                            AuthService.createUser(this, userName, email, userAvatar, avatarColor ){createUserSuccess ->
+                                if (createUserSuccess){
+                                    enableSpinner(false)
+                                    finish()
+                                } else {
+                                    errorToast()
+                                }
                             }
+                        } else {
+                            errorToast()
                         }
-                    } else {
-                        errorToast()
                     }
+                } else {
+                    errorToast()
                 }
-            } else {
-                errorToast()
             }
+        } else {
+            Toast.makeText(this, "Make sure username, email and password are all filled in.", Toast.LENGTH_LONG).show()
         }
+
+
     }
 
     fun errorToast(){
