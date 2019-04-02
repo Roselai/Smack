@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
 import kotlinx.android.synthetic.main.activity_create_user.*
@@ -77,6 +78,10 @@ class CreateUserActivity : AppCompatActivity() {
         }
     }
 
+    fun errorToast(){
+        Toast.makeText(this, "Something went wrong, please try again.", Toast.LENGTH_LONG).show()
+        enableSpinner(false)
+    }
 
     fun enableSpinner(enable: Boolean){
         if (enable){
