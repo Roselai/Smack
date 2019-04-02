@@ -69,11 +69,16 @@ class CreateUserActivity : AppCompatActivity() {
                             if (createUserSuccess){
                                 enableSpinner(false)
                                 finish()
+                            } else {
+                                errorToast()
                             }
                         }
+                    } else {
+                        errorToast()
                     }
-
                 }
+            } else {
+                errorToast()
             }
         }
     }
