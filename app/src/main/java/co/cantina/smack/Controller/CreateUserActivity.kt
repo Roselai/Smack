@@ -17,6 +17,7 @@ class CreateUserActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create_user)
+        createSpinner.visibility = View.INVISIBLE
     }
 
     fun generateUserAvatar(view: View){
@@ -53,7 +54,7 @@ class CreateUserActivity : AppCompatActivity() {
     }
 
     fun createUserClicked(view: View){
-
+        enableSpinner(true)
         val userName = createUsernameText.text.toString()
         val email = createEmailText.text.toString()
         val password = createPasswordText.text.toString()
@@ -65,7 +66,7 @@ class CreateUserActivity : AppCompatActivity() {
                     if (loginSuccess) {
                         AuthService.createUser(this, userName, email, userAvatar, avatarColor ){createUserSuccess ->
                             if (createUserSuccess){
-                                println("successfully created user")
+                                enableSpinner(false)
                                 finish()
                             }
                         }
@@ -74,5 +75,19 @@ class CreateUserActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+
+    fun enableSpinner(enable: Boolean){
+        if (enable){
+            createSpinner.visibility = View.VISIBLE
+
+        } else {
+            createSpinner.visibility = View.INVISIBLE
+        }
+        createUserButton.isEnabled = !enable
+        createAvatarImageView.isEnabled = !enable
+        backgroundColorButton.isEnabled = !enable
+
     }
 }
