@@ -1,12 +1,15 @@
 package co.cantina.smack.Controller
 
+import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v4.content.LocalBroadcastManager
 import android.view.View
 import android.widget.Toast
 import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
+import co.cantina.smack.Utilities.BROADCAST_USER_DATA_CHANGE
 import kotlinx.android.synthetic.main.activity_create_user.*
 import kotlin.random.Random
 
@@ -68,6 +71,8 @@ class CreateUserActivity : AppCompatActivity() {
                         if (loginSuccess) {
                             AuthService.createUser(this, userName, email, userAvatar, avatarColor ){createUserSuccess ->
                                 if (createUserSuccess){
+                                    val userDataChange = Intent(BROADCAST_USER_DATA_CHANGE)
+                                    LocalBroadcastManager.getInstance(this).sendBroadcast(userDataChange)
                                     enableSpinner(false)
                                     finish()
                                 } else {
@@ -84,6 +89,7 @@ class CreateUserActivity : AppCompatActivity() {
             }
         } else {
             Toast.makeText(this, "Make sure username, email and password are all filled in.", Toast.LENGTH_LONG).show()
+            enableSpinner(false)
         }
 
 
