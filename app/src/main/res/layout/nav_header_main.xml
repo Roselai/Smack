@@ -26,7 +26,6 @@
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:id="@+id/userNameNavHeader"
             tools:text="Shukti"
-            android:text="Shukti"
             app:layout_constraintTop_toTopOf="@+id/userImageNavHeader"
             app:layout_constraintStart_toEndOf="@+id/userImageNavHeader" android:layout_marginStart="8dp"/>
 
@@ -35,7 +34,6 @@
             android:layout_height="wrap_content"
             android:id="@+id/userEmailNavHeader"
             tools:text="test@test.com"
-            android:text="test@test.com"
             app:layout_constraintTop_toBottomOf="@+id/userNameNavHeader"
             app:layout_constraintStart_toEndOf="@+id/userImageNavHeader" android:layout_marginStart="8dp"/>
     <Button
