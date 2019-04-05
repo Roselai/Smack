@@ -4,8 +4,10 @@ import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
+import kotlinx.android.synthetic.main.activity_create_user.*
 import kotlinx.android.synthetic.main.activity_login.*
 
 class LoginActivity : AppCompatActivity() {
@@ -13,6 +15,7 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+        loginSpinner.visibility = View.INVISIBLE
     }
 
     fun loginCreateUserButtonClicked(view: View) {
@@ -24,18 +27,46 @@ class LoginActivity : AppCompatActivity() {
     }
 
     fun loginLoginButtonClicked(view: View){
+        enableSpinner(true)
+
         val email = loginEmailText.text.toString()
         val password = loginPasswordText.text.toString()
-        AuthService.loginUser(this, email, password) { loginSuccess ->
-            if (loginSuccess) {
-                AuthService.findUserByEmail(this) { findSuccess ->
-                    if (findSuccess){
-                        finish()
+
+        if (email.isNotEmpty() && password.isNotEmpty()) {
+            AuthService.loginUser(this, email, password) { loginSuccess ->
+                if (loginSuccess) {
+                    AuthService.findUserByEmail(this) { findSuccess ->
+                        if (findSuccess){
+                            enableSpinner(false)
+                            finish()
+                        } else {
+                            errorToast()
+                        }
                     }
+                } else {
+                    errorToast()
                 }
             }
-
+        } else {
+            Toast.makeText(this, "Make sure email and password are filled in", Toast.LENGTH_LONG).show()
         }
 
+
+    }
+
+    fun errorToast(){
+        Toast.makeText(this, "Something went wrong, please try again.", Toast.LENGTH_LONG).show()
+        enableSpinner(false)
+    }
+
+    fun enableSpinner(enable: Boolean){
+        if (enable){
+            loginSpinner.visibility = View.VISIBLE
+
+        } else {
+            loginSpinner.visibility = View.INVISIBLE
+        }
+        loginLoginButton.isEnabled = !enable
+        loginCreateUserButton.isEnabled = !enable
     }
 }
