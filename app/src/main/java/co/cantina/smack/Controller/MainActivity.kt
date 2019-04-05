@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
                 userEmailNavHeader.text = UserDataService.email
                 val resourceId = resources.getIdentifier(UserDataService.avatarName, "drawable", packageName)
                 userImageNavHeader.setImageResource(resourceId)
+                userImageNavHeader.setBackgroundColor(UserDataService.returnAvatarColor(UserDataService.avatarColor))
                 loginButtonNavHeader.text = "Logout"
             }
         }
