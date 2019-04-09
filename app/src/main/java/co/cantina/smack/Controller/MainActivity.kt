@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
@@ -33,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
+        hideKeyboard()
 
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(
             BROADCAST_USER_DATA_CHANGE))
@@ -92,6 +94,8 @@ class MainActivity : AppCompatActivity() {
                     val descTextFeild = dialogView.findViewById<EditText>(R.id.addChannelDescText)
                     val channelName =  nameTextField.text.toString()
                     val channelDesc = descTextFeild.text.toString()
+
+                    //Create channel with the channel name and description
                 }
                 .setNegativeButton("Cancel") { dialogInterface, i ->
                     // Cancel and close the dialog
@@ -105,4 +109,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun hideKeyboard(){
+        val inputManager = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        if (inputManager.isAcceptingText) {
+            inputManager.hideSoftInputFromWindow(currentFocus.windowToken, 0)
+        }
+    }
 }
