@@ -34,7 +34,6 @@ class MainActivity : AppCompatActivity() {
         )
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
-        hideKeyboard()
 
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(
             BROADCAST_USER_DATA_CHANGE))
@@ -96,11 +95,11 @@ class MainActivity : AppCompatActivity() {
                     val channelDesc = descTextFeild.text.toString()
 
                     //Create channel with the channel name and description
-                    hideKeyboard()
+
                 }
                 .setNegativeButton("Cancel") { dialogInterface, i ->
                     // Cancel and close the dialog
-                    hideKeyboard()
+
                 }
                 .show()
         }
@@ -108,7 +107,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun sendMessageButtonClicked(view: View) {
-
+        hideKeyboard()
     }
 
     fun hideKeyboard(){
