@@ -54,6 +54,11 @@ class MainActivity : AppCompatActivity() {
         super.onPause()
     }
 
+    override fun onDestroy() {
+        socket.disconnect()
+        super.onDestroy()
+    }
+
 
     private val userDataChangeReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
