@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import android.widget.EditText
 import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
 import co.cantina.smack.Services.UserDataService
@@ -87,6 +88,10 @@ class MainActivity : AppCompatActivity() {
             builder.setView(dialogView)
                 .setPositiveButton("Add"){ dialogInterface, i ->
                     //perform some logic when clicked
+                    val nameTextField = dialogView.findViewById<EditText>(R.id.addChannelNameText)
+                    val descTextFeild = dialogView.findViewById<EditText>(R.id.addChannelDescText)
+                    val channelName =  nameTextField.text.toString()
+                    val channelDesc = descTextFeild.text.toString()
                 }
                 .setNegativeButton("Cancel") { dialogInterface, i ->
                     // Cancel and close the dialog
