@@ -115,6 +115,8 @@ class MainActivity : AppCompatActivity() {
                     val channelDesc = descTextFeild.text.toString()
 
                     //Create channel with the channel name and description
+                    socket.emit("newChannel", channelName, channelDesc)
+
 
                 }
                 .setNegativeButton("Cancel") { dialogInterface, i ->
