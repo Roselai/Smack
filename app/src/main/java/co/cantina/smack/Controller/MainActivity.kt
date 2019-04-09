@@ -39,7 +39,6 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-
     }
 
     override fun onRestart() {
@@ -49,6 +48,12 @@ class MainActivity : AppCompatActivity() {
             BROADCAST_USER_DATA_CHANGE))
         socket.connect()
     }
+
+    override fun onPause() {
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(userDataChangeReceiver)
+        super.onPause()
+    }
+
 
     private val userDataChangeReceiver = object : BroadcastReceiver(){
         override fun onReceive(context: Context?, intent: Intent?) {
