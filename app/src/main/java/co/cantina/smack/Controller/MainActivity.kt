@@ -11,12 +11,15 @@ import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import co.cantina.smack.Model.Channel
 import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
+import co.cantina.smack.Services.MessageService
 import co.cantina.smack.Services.UserDataService
 import co.cantina.smack.Utilities.BROADCAST_USER_DATA_CHANGE
 import co.cantina.smack.Utilities.SOCKET_URL
 import io.socket.client.IO
+import io.socket.emitter.Emitter
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
@@ -46,6 +49,7 @@ class MainActivity : AppCompatActivity() {
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(
             BROADCAST_USER_DATA_CHANGE))
         socket.connect()
+        socket.on("channelCreated", onNewChannel)
         super.onResume()
     }
 
@@ -122,8 +126,20 @@ class MainActivity : AppCompatActivity() {
                 }
                 .show()
         }
+    }
+
+    private val onNewChannel = Emitter.Listener { args ->
+        runOnUiThread {
+            val channelName = args[0] as String
+            val channelDescription = args[1] as String
+            val channelId = args[2] as String
+
+            val newChannel = Channel(channelName, channelDescription, channelId)
+            MessageService.channels.add(newChannel)
+        }
 
     }
+
 
     fun sendMessageButtonClicked(view: View) {
         hideKeyboard()
