@@ -15,11 +15,15 @@ import co.cantina.smack.R
 import co.cantina.smack.Services.AuthService
 import co.cantina.smack.Services.UserDataService
 import co.cantina.smack.Utilities.BROADCAST_USER_DATA_CHANGE
+import co.cantina.smack.Utilities.SOCKET_URL
+import io.socket.client.IO
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    val socket = IO.socket(SOCKET_URL)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,9 +39,15 @@ class MainActivity : AppCompatActivity() {
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
+
+    }
+
+    override fun onRestart() {
+        super.onRestart()
+
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(
             BROADCAST_USER_DATA_CHANGE))
-
+        socket.connect()
     }
 
     private val userDataChangeReceiver = object : BroadcastReceiver(){
