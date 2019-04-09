@@ -96,9 +96,11 @@ class MainActivity : AppCompatActivity() {
                     val channelDesc = descTextFeild.text.toString()
 
                     //Create channel with the channel name and description
+                    hideKeyboard()
                 }
                 .setNegativeButton("Cancel") { dialogInterface, i ->
                     // Cancel and close the dialog
+                    hideKeyboard()
                 }
                 .show()
         }
