@@ -41,12 +41,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onRestart() {
-        super.onRestart()
 
+    override fun onResume() {
         LocalBroadcastManager.getInstance(this).registerReceiver(userDataChangeReceiver, IntentFilter(
             BROADCAST_USER_DATA_CHANGE))
         socket.connect()
+        super.onResume()
     }
 
     override fun onPause() {
